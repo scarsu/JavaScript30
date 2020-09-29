@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+let all = []
+
+const inp = document.querySelector('input')
+const ul = document.querySelector('ul')
+
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+fetch(endpoint).then(res=>res.json()).then(data=>{
+  all=data
+  inp.addEventListener('input',handleInput)
+})
+
+function handleInput(){
+  const val = this.value.toLowerCase()
+  if(!val){
+    const _html = `
+    <li>Filter for a city</li>
+    <li>or a state</li>
+    `
+    ul.innerHTML = _html;
+    return
+  }
+  const suggestions = all.filter(item => {
+    return item.city.toLowerCase().indexOf(val) > -1 || item.state.toLowerCase().indexOf(val) > -1
+  })
+  console.log(suggestions);
+  updateSuggestions(suggestions, val)
+}
+
+function updateSuggestions(arr, val){
+  let _html = arr.map(e=>{
+    let name = e.city + ',' + e.state
+    name = name.split(val).join(`<span class="hl">${val}</span>`)
+    console.log(name);
+    return `
+    <li>
+      <span class="name">${name}</span>
+      <span class="population">${e.population}</span>
+    </li>`
+  }).join('')
+  ul.innerHTML = _html;
+}
+</script>
+</body>
+</html>
