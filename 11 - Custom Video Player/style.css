@@ -25,6 +25,7 @@ body {
   position: relative;
   font-size: 0;
   overflow: hidden;
+  width: 100%;
 }
 
 /* This css is only applied when fullscreen is active. */
