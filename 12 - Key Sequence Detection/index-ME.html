@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+  let input=[]
+  let secretCode='scarsu'
+  window.addEventListener('keyup',e=>{
+    console.log(e.key)
+    input.push(e.key)
+    console.log(input)
+    input=input.splice(-secretCode.length,secretCode.length)
+    console.log(input)
+    if(input.join('')===secretCode){
+      cornify_add()
+    }
+  })
+</script>
+</body>
+</html>
