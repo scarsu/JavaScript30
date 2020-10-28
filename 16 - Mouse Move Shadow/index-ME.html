@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable>🔥WOAH!</h1>
+  </div>
+
+  <style>
+  html {
+    color: black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+
+  h1 {
+    font-size: 100px;
+    text-shadow: 1px 1px 0px black;
+  }
+  </style>
+
+<script>
+  const hero = document.querySelector('.hero');
+  const text= hero.querySelector('h1')
+  hero.addEventListener('mousemove', shadow)
+  const walk=100
+
+  function shadow(e){
+    const { offsetWidth:width,offsetHeight:height} = hero
+    let { offsetX:x,offsetY:y} = e
+
+    if(this!==e.target){
+      x+=text.offsetLeft
+      y+=text.offsetTop
+    }
+
+    // 以hero中心为0,0计算
+    xWalk=Math.round(x/width*walk-walk/2)
+    yWalk=Math.round(y/height*walk-walk/2)
+
+    text.style.textShadow = `
+      ${xWalk}px ${yWalk}px 0 rgba(0,255,255,0.7),
+      ${xWalk*-1}px ${yWalk}px 0 rgba(255,255,0,0.7),
+      ${yWalk}px ${xWalk}px 0 rgba(255,0,255,0.7)
+    `
+  }
+</script>
+</body>
+</html>
