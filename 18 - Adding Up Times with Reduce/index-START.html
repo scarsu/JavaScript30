@@ -182,6 +182,22 @@
     </li>
   </ul>
 <script>
+  debugger
+  const lis = document.querySelector('.videos').querySelectorAll('li')
+  const times = [...lis].map(node=>getSeconds(node.dataset.time))
+  const sum = secondToString(times.reduce((prev,cur)=>prev+cur,0))
+  function getSeconds(str=''){
+    let arr=str.split(':').map(i=>i||0)
+    let [hour,min,sec] = arr.length > 2 ? arr : [0,...arr]
+    return hour*3600 + min*60 + sec*1
+  }
+  function secondToString(secs=0){
+    let hour = Math.floor(secs/3600).toString().padStart(2,'0')
+    let min = Math.floor(secs%3600/60).toString().padStart(2,'0')
+    let sec = Math.floor(secs%3600%60).toString().padStart(2,'0')
+    return `${hour}:${min}:${sec}`
+  }
+  console.log(sum)
 </script>
 </body>
 </html>
